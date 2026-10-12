@@ -295,7 +295,7 @@ impl PrefsWriter {
             Err(e) => {
                 if !self.failing {
                     log::warn!("{e}");
-                    app.notices.push(format!("{e}. LightCraft keeps trying."));
+                    app.notices.push(format!("{e}. Atelier Lens keeps trying."));
                 }
                 self.failing = true;
                 // don't retry every frame
@@ -501,7 +501,7 @@ fn services(ctx: egui::Context, log_file: Option<&std::path::Path>) -> Services 
         save_preset_file: Some(Box::new(|name: &str| {
             rfd::FileDialog::new()
                 .set_title(lightcraft_ui_egui::i18n::tr("Export Presets"))
-                .add_filter_nocase(lightcraft_ui_egui::i18n::tr("LightCraft Preset"), &["lcpreset"])
+                .add_filter_nocase(lightcraft_ui_egui::i18n::tr("Atelier Lens Preset"), &["lcpreset"])
                 .set_file_name(name)
                 .save_file()
                 .map(|p| p.to_string_lossy().to_string())
@@ -706,7 +706,7 @@ fn main() -> eframe::Result {
         match log_dir().filter(|_| !in_memory) {
             Some(dir) => match logger.attach_dir(&dir) {
                 Ok(path) => {
-                    log::info!("LightCraft {}, log file {}", env!("CARGO_PKG_VERSION"), path.display());
+                    log::info!("Atelier Lens {}, log file {}", env!("CARGO_PKG_VERSION"), path.display());
                     log_file = Some(path);
                 }
                 // The file sink has given up by now, so this goes to standard error only.
@@ -739,7 +739,7 @@ fn main() -> eframe::Result {
     lightcraft_engine::gpu::set_enabled(gpu_on);
     let options = eframe::NativeOptions {
         viewport: egui::ViewportBuilder::default()
-            .with_title("LightCraft")
+            .with_title("Atelier Lens")
             .with_inner_size([1600.0, 1000.0])
             .with_min_inner_size([900.0, 560.0])
             .with_drag_and_drop(true)
@@ -755,7 +755,7 @@ fn main() -> eframe::Result {
     // the app's copy: `log_file` is still named in the message of a start that fails
     let app_log_file = log_file.clone();
     let started = eframe::run_native(
-        "LightCraft",
+        "Atelier Lens",
         options,
         Box::new(move |cc| {
             let (mut session, problem) = open_session(in_memory, library_dir, seed_demo && files.is_empty());
@@ -825,7 +825,7 @@ fn main() -> eframe::Result {
 /// message box naming the log file, instead of exiting without a trace — the release builds have
 /// no console on Windows, and an app started from Finder shows no standard error (issue #260).
 fn startup_failed(error: &str, log_file: Option<&std::path::Path>) {
-    log::error!("LightCraft could not open its window: {error}");
+    log::error!("Atelier Lens could not open its window: {error}");
     if std::env::var_os("LIGHTCRAFT_NO_PREFS").is_some() {
         return; // tests and scripts: no dialog to click away
     }

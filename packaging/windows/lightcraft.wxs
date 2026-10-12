@@ -13,28 +13,28 @@
 -->
 <Wix xmlns="http://wixtoolset.org/schemas/v4/wxs">
   <Package
-      Name="LightCraft"
-      Manufacturer="Learning Machines LLC"
+      Name="Atelier Lens"
+      Manufacturer="Aetherion Nation"
       Version="$(var.Version)"
       UpgradeCode="229BB552-5EFD-479A-BA86-8CB6D926390C"
       Scope="perMachine"
       Compressed="yes"
       Language="1033">
-    <SummaryInformation Description="LightCraft photo library and raw developer" Manufacturer="Learning Machines LLC" />
+    <SummaryInformation Description="Atelier Lens photo library and raw developer" Manufacturer="Aetherion Nation" />
     <!-- Same-version upgrades let successive pre-releases of one X.Y.Z replace each other
          (MSI versions are numeric, so 1.2.3-rc.1 and 1.2.3-rc.2 are both 1.2.3). -->
     <MajorUpgrade AllowSameVersionUpgrades="yes"
-        DowngradeErrorMessage="A newer version of LightCraft is already installed." />
+        DowngradeErrorMessage="A newer version of Atelier Lens is already installed." />
     <MediaTemplate EmbedCab="yes" CompressionLevel="high" />
 
     <Icon Id="LightcraftIcon.ico" SourceFile="$(var.IconPath)" />
     <Property Id="ARPPRODUCTICON" Value="LightcraftIcon.ico" />
-    <Property Id="ARPURLINFOABOUT" Value="https://getartcraft.com/apps/lightcraft" />
-    <Property Id="ARPURLUPDATEINFO" Value="https://getartcraft.com/apps/lightcraft" />
-    <Property Id="ARPHELPLINK" Value="https://discord.gg/artcraft" />
+    <Property Id="ARPURLINFOABOUT" Value="https://www.aetherionnnation.com/atelier/lens" />
+    <Property Id="ARPURLUPDATEINFO" Value="https://www.aetherionnnation.com/atelier/lens" />
+    <Property Id="ARPHELPLINK" Value="https://www.aetherionnnation.com" />
 
     <StandardDirectory Id="ProgramFiles6432Folder">
-      <Directory Id="INSTALLFOLDER" Name="LightCraft" />
+      <Directory Id="INSTALLFOLDER" Name="Atelier Lens" />
     </StandardDirectory>
     <!-- The folder of the installed version (written by LightcraftApp), so an upgrade installs
          where the user chose instead of moving back to Program Files (issue #399). Searched into
@@ -46,7 +46,7 @@
         Condition="PREVIOUSINSTALLFOLDER AND NOT INSTALLFOLDER" />
     <StandardDirectory Id="ProgramMenuFolder" />
 
-    <Feature Id="Main" Title="LightCraft" Level="1">
+    <Feature Id="Main" Title="Atelier Lens" Level="1">
       <ComponentGroupRef Id="LightcraftFiles" />
     </Feature>
 
@@ -75,8 +75,8 @@
     <WixVariable Id="WixUIBannerBmp" Value="$(var.UiBannerBmp)" />
 
     <Property Id="WIXUI_EXITDIALOGOPTIONALTEXT"
-        Value="LightCraft has been installed. You can start it at any time from the Start menu." />
-    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch LightCraft" />
+        Value="Atelier Lens has been installed. You can start it at any time from the Start menu." />
+    <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOXTEXT" Value="Launch Atelier Lens" />
     <Property Id="WIXUI_EXITDIALOGOPTIONALCHECKBOX" Value="1" />
 
     <!-- "Launch LightCraft" on Finish. WixUnelevatedShellExec (Util extension) asks the desktop
@@ -167,8 +167,8 @@
     <ComponentGroup Id="LightcraftFiles" Directory="INSTALLFOLDER">
       <Component Id="LightcraftApp" Guid="8A1D3A39-F7C1-47B1-97AE-40C80BF82F4A">
         <File Id="LightcraftExe" Source="$(var.BinDir)\lightcraft.exe" KeyPath="yes">
-          <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="LightCraft"
-              Description="LightCraft photo library and raw developer" WorkingDirectory="INSTALLFOLDER" Advertise="yes"
+          <Shortcut Id="StartMenuShortcut" Directory="ProgramMenuFolder" Name="Atelier Lens"
+              Description="Atelier Lens photo library and raw developer" WorkingDirectory="INSTALLFOLDER" Advertise="yes"
               Icon="LightcraftIcon.ico" IconIndex="0" />
         </File>
 

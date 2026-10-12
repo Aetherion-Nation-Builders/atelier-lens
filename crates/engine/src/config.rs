@@ -13,9 +13,9 @@ use crate::Session;
 /// LightCraft's per-user config folder (`…/LightCraft`), if the platform tells us where.
 pub fn config_dir() -> Option<PathBuf> {
     if cfg!(target_os = "macos") {
-        std::env::var_os("HOME").map(|h| PathBuf::from(h).join("Library/Application Support/LightCraft"))
+        std::env::var_os("HOME").map(|h| PathBuf::from(h).join("Library/Application Support/Atelier Lens"))
     } else if cfg!(windows) {
-        std::env::var_os("APPDATA").map(|a| PathBuf::from(a).join("LightCraft"))
+        std::env::var_os("APPDATA").map(|a| PathBuf::from(a).join("Atelier Lens"))
     } else {
         std::env::var_os("XDG_CONFIG_HOME")
             .map(PathBuf::from)

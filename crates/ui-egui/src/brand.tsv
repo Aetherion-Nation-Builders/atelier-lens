@@ -1,0 +1,75 @@
+# Atelier brand strings: the UI strings that are ours, not LightCraft's, with their translations.
+# Format: language code <TAB> English source <TAB> translation. The `product` line is the rename
+# applied to every upstream catalog entry as it loads (see identity.rs and docs/brand.md).
+# Languages without a line for a string show the English.
+product	LightCraft	Atelier Lens
+
+en	Join the Nation…	Join the Nation…
+en	Join the Nation	Join the Nation
+en	Join the Nation (aetherionnnation.com)	Join the Nation (aetherionnnation.com)
+en	Atelier Website	Atelier Website
+en	Atelier — the Nation's creative suite	Atelier — the Nation's creative suite
+en	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.
+
+zh-hans	Join the Nation…	加入 Nation…
+zh-hans	Join the Nation	加入 Nation
+zh-hans	Join the Nation (aetherionnnation.com)	加入 Nation（aetherionnnation.com）
+zh-hans	Atelier Website	Atelier 网站
+zh-hans	Atelier — the Nation's creative suite	Atelier — Nation 的创意套件
+zh-hans	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	Nation 的照片库与 RAW 显影工具。Atelier 的一部分，基于 ArtCraft 团队的 LightCraft 构建。
+
+zh-hant	Join the Nation…	加入 Nation…
+zh-hant	Join the Nation	加入 Nation
+zh-hant	Join the Nation (aetherionnnation.com)	加入 Nation（aetherionnnation.com）
+zh-hant	Atelier Website	Atelier 網站
+zh-hant	Atelier — the Nation's creative suite	Atelier — Nation 的創意套件
+zh-hant	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	Nation 的相片圖庫與 RAW 顯影工具。Atelier 的一部分，以 ArtCraft 團隊的 LightCraft 為基礎打造。
+
+ja	Join the Nation…	Nation に参加…
+ja	Join the Nation	Nation に参加
+ja	Join the Nation (aetherionnnation.com)	Nation に参加（aetherionnnation.com）
+ja	Atelier Website	Atelier ウェブサイト
+ja	Atelier — the Nation's creative suite	Atelier — Nation のクリエイティブスイート
+ja	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	Nation の写真ライブラリと RAW 現像ソフト。Atelier の一部で、ArtCraft チームの LightCraft をもとに作られています。
+
+pt-br	Join the Nation…	Junte-se à Nation…
+pt-br	Join the Nation	Junte-se à Nation
+pt-br	Join the Nation (aetherionnnation.com)	Junte-se à Nation (aetherionnnation.com)
+pt-br	Atelier Website	Site do Atelier
+pt-br	Atelier — the Nation's creative suite	Atelier — o conjunto criativo da Nation
+pt-br	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	A biblioteca de fotos e revelador RAW da Nation. Parte do Atelier, construído sobre o LightCraft da equipe ArtCraft.
+
+es	Join the Nation…	Únete a la Nation…
+es	Join the Nation	Únete a la Nation
+es	Join the Nation (aetherionnnation.com)	Únete a la Nation (aetherionnnation.com)
+es	Atelier Website	Sitio web de Atelier
+es	Atelier — the Nation's creative suite	Atelier — la suite creativa de la Nation
+es	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	La biblioteca de fotos y revelador RAW de la Nation. Parte de Atelier, construido sobre LightCraft del equipo de ArtCraft.
+
+de	Join the Nation…	Der Nation beitreten…
+de	Join the Nation	Der Nation beitreten
+de	Join the Nation (aetherionnnation.com)	Der Nation beitreten (aetherionnnation.com)
+de	Atelier Website	Atelier-Website
+de	Atelier — the Nation's creative suite	Atelier — die Kreativ-Suite der Nation
+de	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	Die Fotobibliothek und der RAW-Entwickler der Nation. Teil von Atelier, basierend auf LightCraft vom ArtCraft-Team.
+
+ru	Join the Nation…	Присоединиться к Nation…
+ru	Join the Nation	Присоединиться к Nation
+ru	Join the Nation (aetherionnnation.com)	Присоединиться к Nation (aetherionnnation.com)
+ru	Atelier Website	Сайт Atelier
+ru	Atelier — the Nation's creative suite	Atelier — творческий пакет Nation
+ru	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	Фотобиблиотека и RAW-конвертер Nation. Часть Atelier, создан на основе LightCraft от команды ArtCraft.
+
+fr	Join the Nation…	Rejoindre la Nation…
+fr	Join the Nation	Rejoindre la Nation
+fr	Join the Nation (aetherionnnation.com)	Rejoindre la Nation (aetherionnnation.com)
+fr	Atelier Website	Site web d'Atelier
+fr	Atelier — the Nation's creative suite	Atelier — la suite créative de la Nation
+fr	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	La photothèque et le développeur RAW de la Nation. Fait partie d'Atelier, basé sur LightCraft de l'équipe ArtCraft.
+
+uk	Join the Nation…	Приєднатися до Nation…
+uk	Join the Nation	Приєднатися до Nation
+uk	Join the Nation (aetherionnnation.com)	Приєднатися до Nation (aetherionnnation.com)
+uk	Atelier Website	Вебсайт Atelier
+uk	Atelier — the Nation's creative suite	Atelier — творчий набір Nation
+uk	The Nation's photo library and raw developer. Part of Atelier, built on LightCraft by the ArtCraft team.	Фотобібліотека й RAW-конвертер Nation. Частина Atelier, створена на основі LightCraft від команди ArtCraft.

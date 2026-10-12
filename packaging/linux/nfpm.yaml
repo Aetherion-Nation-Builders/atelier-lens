@@ -13,11 +13,11 @@ release: 1
 section: graphics
 priority: optional
 maintainer: ${LIGHTCRAFT_MAINTAINER}
-vendor: Learning Machines LLC
-homepage: https://getartcraft.com/apps/lightcraft
+vendor: Aetherion Nation
+homepage: https://www.aetherionnnation.com/atelier/lens
 license: MIT OR Apache-2.0
 description: |-
-  Open-source, native photo library and raw developer that works the way
+  Atelier Lens, the Nation's photo library (built on LightCraft). Open-source, native photo library and raw developer that works the way
   Lightroom users expect. Import, rate, keyword and organise photos; develop
   raw files non-destructively with exposure, tone, color grading, masks and
   presets; GPU processing (wgpu). Includes lightcraft-cli, a headless renderer
