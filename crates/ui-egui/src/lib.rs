@@ -14,6 +14,7 @@ pub mod export_task;
 pub mod headless;
 pub mod i18n;
 pub mod icons;
+pub mod identity;
 pub mod import;
 pub mod lightroom_import;
 pub mod links;
@@ -515,7 +516,7 @@ impl LightcraftApp {
                 let t = ctx.input(|i| i.time);
                 self.ui.toast = Some((
                     crate::i18n::tr_format!(
-                        "{n} change{} saved in memory but not written to disk: {e} — LightCraft will retry",
+                        "{n} change{} saved in memory but not written to disk: {e} — Atelier Lens will retry",
                         if n == 1 { "" } else { "s" },
                         n = n,
                         e = e

@@ -7,9 +7,9 @@
   <key>CFBundleDevelopmentRegion</key>
   <string>en</string>
   <key>CFBundleDisplayName</key>
-  <string>LightCraft</string>
+  <string>Atelier Lens</string>
   <key>CFBundleName</key>
-  <string>LightCraft</string>
+  <string>Atelier Lens</string>
   <key>CFBundleExecutable</key>
   <string>LightCraft</string>
   <key>CFBundleIdentifier</key>
@@ -43,7 +43,7 @@
   <key>NSRequiresAquaSystemAppearance</key>
   <false/>
   <key>NSHumanReadableCopyright</key>
-  <string>Copyright © the LightCraft authors. MIT OR Apache-2.0.</string>
+  <string>Copyright © Aetherion Nation and the LightCraft authors. MIT OR Apache-2.0.</string>
 
   <!-- Lightcraft's own format. -->
   <key>UTExportedTypeDeclarations</key>
@@ -52,7 +52,7 @@
       <key>UTTypeIdentifier</key>
       <string>ai.storyteller.lightcraft.document</string>
       <key>UTTypeDescription</key>
-      <string>LightCraft Document</string>
+      <string>Atelier Lens Document</string>
       <key>UTTypeConformsTo</key>
       <array>
         <string>public.data</string>
