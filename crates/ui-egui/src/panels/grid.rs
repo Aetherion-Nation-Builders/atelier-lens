@@ -990,7 +990,7 @@ pub fn context_menu(app: &mut LightcraftApp, ui: &mut egui::Ui, id: PhotoId) {
     // (desktop only: the web can't start programs)
     ui.add_enabled_ui(crate::menus::ui_enabled(app, "photo.editInPhotoCraft"), |ui| {
         ui.menu_button(crate::i18n::tr("Edit In"), |ui| {
-            if ui.button(crate::i18n::tr("Edit in PhotoCraft")).clicked() {
+            if ui.button(crate::i18n::tr("Edit in Atelier Pigment")).clicked() {
                 let _ = app.run("photo.editInPhotoCraft", json!({}));
             }
             if ui.button(crate::i18n::tr("Edit in Other Editor")).clicked() {

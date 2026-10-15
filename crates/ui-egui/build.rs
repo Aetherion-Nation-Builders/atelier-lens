@@ -48,7 +48,7 @@ fn variant_for(code: &str) -> Result<String, String> {
 /// same rule as `src/identity.rs` (`rewrite`), repeated here because a build script can't use the
 /// crate it builds.
 fn atelier_rewrite(s: &str) -> String {
-    s.replace(" a LightCraft", " an Atelier Lens").replace("LightCraft", "Atelier Lens")
+    s.replace(" a LightCraft", " an Atelier Lens").replace("LightCraft", "Atelier Lens").replace("PhotoCraft", "Atelier Pigment")
 }
 
 fn capitalize(part: &str) -> String {

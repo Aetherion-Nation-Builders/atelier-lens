@@ -14,18 +14,23 @@ pub const SUITE: &str = "Atelier";
 pub const VENDOR: &str = "Aetherion Nation";
 /// The upstream project this app is built on, as named in its own strings and catalogs.
 pub const UPSTREAM: &str = "LightCraft";
+/// The sibling app Photo ▸ Edit In opens: upstream calls it PhotoCraft; in Atelier it is
+/// Atelier Pigment. [`rewrite`] renames it too, so the Edit In labels keep their translations.
+pub const SIBLING_UPSTREAM: &str = "PhotoCraft";
+/// The sibling app's product name (its macOS bundle is `Atelier Pigment.app`).
+pub const SIBLING: &str = "Atelier Pigment";
 
 /// Rewrites an upstream string so it names this product. Applied to every translation catalog
 /// entry as it is read, so the UI follows the brand in every language without editing the
 /// catalogs (which would make every upstream catalog change a merge conflict).
 pub fn rewrite(s: &str) -> String {
     // "a LightCraft backup" reads "an Atelier Lens backup".
-    s.replace(&format!(" a {UPSTREAM}"), &format!(" an {PRODUCT}")).replace(UPSTREAM, PRODUCT)
+    s.replace(&format!(" a {UPSTREAM}"), &format!(" an {PRODUCT}")).replace(UPSTREAM, PRODUCT).replace(SIBLING_UPSTREAM, SIBLING)
 }
 
 /// Like [`rewrite`], borrowing when there is nothing to change (the common case).
 pub fn rewrite_cow(s: &str) -> std::borrow::Cow<'_, str> {
-    if s.contains(UPSTREAM) { std::borrow::Cow::Owned(rewrite(s)) } else { std::borrow::Cow::Borrowed(s) }
+    if s.contains(UPSTREAM) || s.contains(SIBLING_UPSTREAM) { std::borrow::Cow::Owned(rewrite(s)) } else { std::borrow::Cow::Borrowed(s) }
 }
 
 /// Upstream strings the brand layer retires: anything naming the upstream community and site.
@@ -80,6 +85,8 @@ mod tests {
         assert_eq!(rewrite("LightCraft — LightCraft"), "Atelier Lens — Atelier Lens");
         assert_eq!(rewrite("Lightroom"), "Lightroom");
         assert_eq!(rewrite("not a LightCraft backup"), "not an Atelier Lens backup");
+        assert_eq!(rewrite("Edit in PhotoCraft"), "Edit in Atelier Pigment");
+        assert!(matches!(rewrite_cow("PhotoCraft"), std::borrow::Cow::Owned(_)));
         assert!(retired("Join the ArtCraft Discord…") && retired("ArtCraft Website") && retired("LightCraft on getartcraft.com"));
         assert!(!retired("Join the Nation") && !retired("Save As…"));
     }

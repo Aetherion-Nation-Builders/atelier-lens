@@ -43,3 +43,9 @@ Still upstream's name, for later passes: messages from the engine crates (librar
 face-model errors), the browser backup's README text, and the `docs/` manuals. For the packaging
 pass (real installers): the macOS `.app` bundle and DMG volume name (`packaging/macos/package.sh`),
 the DMG window background, and the package scripts' file names.
+
+Photo ▸ Edit In opens the sibling app, which upstream calls PhotoCraft: here it is Atelier Pigment.
+`identity::rewrite` (and `atelier_rewrite` in `build.rs`) renames that name too, the Edit In
+labels say Atelier Pigment, and on macOS `apps/lightcraft/src/editors.rs` looks for
+`Atelier Pigment.app` before upstream's `PhotoCraft.app`. The setting's stored value stays
+`PhotoCraft` (`state::PHOTOCRAFT`).

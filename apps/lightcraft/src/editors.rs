@@ -112,7 +112,7 @@ fn launcher(app: &str) -> Result<Launcher, String> {
         return Ok(if cfg!(target_os = "macos") { Launcher::MacApp(app.to_string()) } else { Launcher::Program(PathBuf::from(app)) });
     }
     find_photocraft().ok_or_else(|| {
-        "PhotoCraft isn't installed. Get it from getartcraft.com/apps/photocraft, or give where it is in Settings ▸ External Editing.".to_string()
+        "Atelier Pigment isn't installed. Install it with Atelier Gate, or give where it is in Settings ▸ External Editing.".to_string()
     })
 }
 
@@ -120,9 +120,15 @@ fn find_photocraft() -> Option<Launcher> {
     let env = |k: &str| std::env::var_os(k).map(|v| v.to_string_lossy().to_string());
     if cfg!(target_os = "macos") {
         // LaunchServices finds the app wherever it is; these are only the usual places
-        let home = env("HOME").map(|h| Path::new(&h).join("Applications/PhotoCraft.app"));
-        let found = [Some(PathBuf::from("/Applications/PhotoCraft.app")), home].into_iter().flatten().find(|p| p.is_dir());
-        return Some(Launcher::MacApp(found.map_or_else(|| PHOTOCRAFT.to_string(), |p| p.to_string_lossy().to_string())));
+        // Atelier: the sibling is installed as `Atelier Pigment.app` (Atelier Gate puts it in
+        // /Applications); a PhotoCraft.app from upstream is still found after it.
+        let home = env("HOME").map(PathBuf::from);
+        let found = ["Atelier Pigment.app", "PhotoCraft.app"]
+            .iter()
+            .flat_map(|name| [Some(Path::new("/Applications").join(name)), home.as_ref().map(|h| h.join("Applications").join(name))])
+            .flatten()
+            .find(|p| p.is_dir());
+        return Some(Launcher::MacApp(found.map_or_else(|| "Atelier Pigment".to_string(), |p| p.to_string_lossy().to_string())));
     }
     if cfg!(target_os = "windows") {
         let install_dir = reg_query(r"HKLM\Software\PhotoCraft", Some("InstallDir"));

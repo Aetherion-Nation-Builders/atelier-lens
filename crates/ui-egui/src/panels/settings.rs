@@ -143,7 +143,7 @@ fn general_tab(app: &mut LightcraftApp, ui: &mut egui::Ui, t: &Tokens) {
     check(ui, "settings.autoAdvance", &mut app.ui.auto_advance, "Auto Advance: move to the next photo after rating or flagging");
     check(ui, "settings.confirmDelete", &mut app.ui.settings.confirm_delete, "Confirm before moving photos to Recently Deleted");
     heading(ui, t, crate::i18n::tr("External Editing"));
-    row(ui, t, crate::i18n::tr("PhotoCraft"), |ui| {
+    row(ui, t, crate::i18n::tr("Atelier Pigment"), |ui| {
         crate::text_field::TextField::singleline("field:photocraftPath", &mut app.ui.settings.photocraft_path)
             .hint(crate::i18n::tr("Found automatically"))
             .width(220.0)
@@ -154,7 +154,7 @@ fn general_tab(app: &mut LightcraftApp, ui: &mut egui::Ui, t: &Tokens) {
         ui,
         t,
         crate::i18n::tr(
-            "Photo ▸ Edit In ▸ Edit in PhotoCraft (⇧⌘E, or right-click a photo) renders a copy with your edits, stacks it with the original and opens it in PhotoCraft. Save there and the copy updates here. As PSD, PhotoCraft saves straight back to it. Leave the location empty unless you use a portable copy.",
+            "Photo ▸ Edit In ▸ Edit in Atelier Pigment (⇧⌘E, or right-click a photo) renders a copy with your edits, stacks it with the original and opens it in Atelier Pigment. Save there and the copy updates here. As PSD, Atelier Pigment saves straight back to it. Leave the location empty unless you use a portable copy.",
         ),
     );
     row(ui, t, crate::i18n::tr("Other editor"), |ui| {
