@@ -1,0 +1,59 @@
+# Throwaway: lives only on a verify/* branch to run the repo's own gate on a sync before its PR is
+# merged. Never merged.
+name: Verify sync
+
+on:
+  push:
+    branches: ["verify/**"]
+
+permissions:
+  contents: read
+
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 300
+    env:
+      CARGO_TERM_COLOR: always
+      CARGO_PROFILE_DEV_DEBUG: "0"
+      CARGO_INCREMENTAL: "0"
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/local/lib/android /usr/share/dotnet /opt/ghc /usr/local/.ghcup /opt/hostedtoolcache/CodeQL /usr/share/swift
+          df -h /
+      - name: Linux build dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libxkbcommon-dev libwayland-dev libx11-dev libxrandr-dev libxi-dev libxcursor-dev libgl1-mesa-dev \
+            libgtk-3-dev libasound2-dev libudev-dev libfontconfig1-dev libssl-dev pkg-config cmake nasm clang ffmpeg
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: rustfmt, clippy
+          targets: wasm32-unknown-unknown
+      - name: Gate
+        shell: bash
+        run: |
+          set -o pipefail
+          if grep -qE '"ci"' xtask/src/*.rs 2>/dev/null; then
+            cargo xtask ci 2>&1 | tee gate.log
+          else
+            cargo fmt --all -- --check
+            cargo clippy --workspace --all-targets --locked -- -D warnings 2>&1 | tee gate.log
+            cargo test --workspace --locked 2>&1 | tee -a gate.log
+          fi
+      - name: Failing tests
+        if: failure()
+        shell: bash
+        run: |
+          set +e
+          sed 's/\x1b\[[0-9;]*[A-Za-z]//g' gate.log > plain.log
+          { grep -E "^test .* FAILED$" plain.log | sed 's/^test //; s/ \.\.\. FAILED$//'
+            grep -E "^ +(FAIL|SIGSEGV|SIGABRT|TIMEOUT) \[" plain.log | sed -E 's/^ +[A-Z]+ \[[^]]*\] +//'; } | sort -u | head -15 | while read -r n; do echo "::error title=Failing test::$n"; done
+          grep -E "panicked at|^error(\[E[0-9]+\])?:|^error: |No space left|SIGKILL|signal: " plain.log | sort -u | head -12 | while read -r l; do echo "::error title=Gate output::${l:0:900}"; done
+          grep -A8 -E "^error(\[E[0-9]+\])?:" plain.log | head -40 | tr '\n' ' ' | cut -c1-1800 | sed 's/^/::error title=First errors::/'
+          echo "::error title=Log tail::$(tail -c 1500 plain.log | tr '\n' ' ' | cut -c1-1400)"
+          df -h /
+          true
