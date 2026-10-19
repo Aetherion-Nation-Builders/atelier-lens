@@ -1,0 +1,89 @@
+# Atelier: throwaway check of an upstream sync branch (verify/** is never merged).
+# Runs the repository's gate and writes failures as job annotations, which can be read through
+# the REST API (job logs can't be fetched by the sync agent).
+name: zz-verify-sync
+on:
+  push:
+    branches: ["verify/**"]
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: zz-verify-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  CARGO_TERM_COLOR: never
+  CARGO_INCREMENTAL: "0"
+  RUST_BACKTRACE: "1"
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 340
+    steps:
+      - uses: actions/checkout@v4
+      - name: Free disk space
+        run: |
+          sudo rm -rf /usr/share/dotnet /usr/local/lib/android /opt/ghc /opt/hostedtoolcache/CodeQL /usr/local/share/boost /usr/share/swift || true
+          df -h /
+      - name: System packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends \
+            libxkbcommon-dev libwayland-dev libx11-dev libxrandr-dev libxi-dev libxcursor-dev \
+            libgl1-mesa-dev libgtk-3-dev libasound2-dev libudev-dev libdbus-1-dev pkg-config 
+      - uses: dtolnay/rust-toolchain@stable
+        with:
+          components: clippy, rustfmt
+          targets: wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@v2
+      - name: Write the failure reporter
+        run: |
+          cat > "$RUNNER_TEMP/report.sh" <<'SH'
+          #!/usr/bin/env bash
+          # report.sh <step> <log>: failing tests, panics and errors as annotations.
+          set +e
+          step="$1"; log="$2"
+          sed 's/\x1b\[[0-9;]*[A-Za-z]//g' "$log" > "$log.plain"
+          grep -E "^test .* FAILED$" "$log.plain" | sed 's/^test //; s/ \.\.\. FAILED$//' | sort -u | head -40 | while read -r name; do
+            echo "::error title=$step failing test::${name}"
+          done
+          grep -E "^error: test failed, to rerun pass" "$log.plain" | sort -u | head -20 | while read -r line; do
+            echo "::error title=$step failing target::${line:0:300}"
+          done
+          grep -E "panicked at|^error(\[E[0-9]+\])?:|^warning: unused|No space left|SIGKILL|signal: |FAIL " "$log.plain" | grep -v "^error: test failed" | sort -u | head -25 | while read -r line; do
+            echo "::error title=$step output::${line:0:900}"
+          done
+          grep -A12 -E "^---- .* stdout ----" "$log.plain" | head -150 | tr '\n' ' ' | fold -w 900 | head -8 | while read -r chunk; do
+            echo "::error title=$step test stdout::${chunk}"
+          done
+          echo "::error title=$step log tail::$(tail -c 1800 "$log.plain" | tr '\n' ' ' | cut -c1-1700)"
+          SH
+          chmod +x "$RUNNER_TEMP/report.sh"
+      - name: fmt
+        run: |
+          set -o pipefail
+          cargo fmt --all -- --check 2>&1 | tee fmt.log || { "$RUNNER_TEMP/report.sh" fmt fmt.log; exit 1; }
+      - name: clippy
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          cargo clippy --workspace --all-targets  -- -D warnings 2>&1 | tee clippy.log || { "$RUNNER_TEMP/report.sh" clippy clippy.log; exit 1; }
+      - name: test
+        if: ${{ !cancelled() }}
+        run: |
+          set -o pipefail
+          cargo test --workspace --no-fail-fast  2>&1 | tee test.log || { "$RUNNER_TEMP/report.sh" test test.log; exit 1; }
+      - name: rest of cargo xtask ci
+        if: ${{ !cancelled() }}
+        run: |
+          failed=0
+          for step in parity layers assets wasm; do
+            echo "::group::xtask $step"
+            set -o pipefail
+            if ! cargo xtask $step 2>&1 | tee "xtask-$step.log"; then
+              "$RUNNER_TEMP/report.sh" "xtask $step" "xtask-$step.log"; failed=1
+            fi
+            echo "::endgroup::"
+          done
+          { cargo clippy -p lightcraft-codecs --features heif --all-targets -- -D warnings && cargo test -p lightcraft-codecs -p lightcraft-heif --features lightcraft-codecs/heif && cargo test -p lightcraft-engine --lib --features lightcraft-codecs/heif heic; } > heif.log 2>&1 || { "$RUNNER_TEMP/report.sh" heif heif.log; failed=1; }
+          exit $failed
