@@ -52,6 +52,13 @@ fn capitalize(part: &str) -> String {
     }
 }
 
+/// Atelier's brand layer: the format catalogs name the upstream product, the UI names ours. The
+/// same rule as `src/identity.rs` (`rewrite`), repeated here because a build script can't use the
+/// crate it builds.
+fn atelier_rewrite(s: &str) -> String {
+    s.replace(" a LightCraft", " an Atelier Lens").replace("LightCraft", "Atelier Lens")
+}
+
 fn generate() -> Result<String, Box<dyn std::error::Error>> {
     let mut catalogs: Vec<(String, String, BTreeMap<String, String>)> = Vec::new();
     for entry in fs::read_dir("locales")? {
@@ -64,6 +71,7 @@ fn generate() -> Result<String, Box<dyn std::error::Error>> {
         let mut messages: BTreeMap<String, String> =
             serde_json::from_str(&fs::read_to_string(&path)?).map_err(|error| format!("locales/{name}: {error}"))?;
         messages.retain(|_, translated| !translated.is_empty());
+        let messages = messages.into_iter().map(|(key, value)| (atelier_rewrite(&key), atelier_rewrite(&value))).collect();
         catalogs.push((code.to_string(), variant, messages));
     }
     catalogs.sort_by(|a, b| a.0.cmp(&b.0));
