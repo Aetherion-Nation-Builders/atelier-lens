@@ -357,8 +357,8 @@ fn a_gpu_lost_while_running_turns_the_gpu_off_next_time() {
     assert!(text.contains("reset the GPU (device lost (Unknown)") && text.contains("renders on the CPU from its next start"), "{text}");
     assert_eq!(stopped_text("its window stopped drawing", None), "its window stopped drawing");
     let (title, body) = lightcraft_ui_egui::i18n::stopped_message(&text, Some("/logs/lightcraft.log"));
-    assert_eq!(title, "LightCraft stopped");
-    assert!(body.starts_with("LightCraft stopped unexpectedly: its window stopped drawing") && body.ends_with("/logs/lightcraft.log"), "{body}");
+    assert_eq!(title, "Atelier Lens stopped");
+    assert!(body.starts_with("Atelier Lens stopped unexpectedly: its window stopped drawing") && body.ends_with("/logs/lightcraft.log"), "{body}");
     let _ = std::fs::remove_dir_all(&d);
 }
 

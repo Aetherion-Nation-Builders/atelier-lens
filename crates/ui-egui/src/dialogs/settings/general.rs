@@ -143,7 +143,7 @@ fn lens_profiles(app: &mut LightcraftApp, ui: &mut egui::Ui, t: &Tokens) {
         }
     });
     let mut offer = app.ui.settings.lens_database != Offer::Declined;
-    if check(ui, "settings.lensDatabaseOffer", &mut offer, "Offer the lens database download when LightCraft starts") {
+    if check(ui, "settings.lensDatabaseOffer", &mut offer, "Offer the lens database download when Atelier Lens starts") {
         app.ui.settings.lens_database = if offer { Offer::Ask } else { Offer::Declined };
     }
     hint(

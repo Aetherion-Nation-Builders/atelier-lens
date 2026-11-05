@@ -479,7 +479,7 @@ impl Unavailable {
             Unavailable::NotFound => crate::i18n::tr("Not found: moved, renamed or on a disconnected drive").to_string(),
             Unavailable::NotAFolder => crate::i18n::tr("This is a file, not a library folder").to_string(),
             Unavailable::Unreadable(e) => format!("{} {e}", crate::i18n::tr("This folder can't be read:")),
-            Unavailable::NoLibrary => crate::i18n::tr("There is no LightCraft library in this folder any more").to_string(),
+            Unavailable::NoLibrary => crate::i18n::tr("There is no Atelier Lens library in this folder any more").to_string(),
             Unavailable::CatalogUnreadable(e) => format!("{} {e}", crate::i18n::tr("The library's catalog can't be read:")),
             Unavailable::CheckFailed(e) => e.clone(),
             Unavailable::LookupFailed(e) => format!("{} {e}", crate::i18n::tr("This library couldn't be checked:")),
@@ -740,7 +740,7 @@ fn unavailable(path: &str) -> Option<Unavailable> {
 pub fn missing_library_reason(dir: &Path) -> Option<String> {
     match lightcraft_engine::library::library_state(dir) {
         Ok(true) => None,
-        Ok(false) if dir.exists() => Some(crate::i18n::tr("There is no LightCraft library in this folder any more.").to_string()),
+        Ok(false) if dir.exists() => Some(crate::i18n::tr("There is no Atelier Lens library in this folder any more.").to_string()),
         Ok(false) => {
             Some(crate::i18n::tr("The library isn't there: it was moved or renamed, or its drive or network share isn't connected.").to_string())
         }
@@ -1088,9 +1088,9 @@ pub fn show(app: &mut LightcraftApp, ctx: &egui::Context, blocked: bool) {
     let frame = egui::Frame::window(&ctx.global_style()).inner_margin(egui::Margin::symmetric(18, 14));
     // what the window says, in one piece, for a screen reader: the labels below are separate nodes
     let description = if problem.path.is_empty() {
-        format!("{} {} {EXPLANATION}", crate::i18n::tr("LightCraft couldn't find where to keep your library."), problem.error)
+        format!("{} {} {EXPLANATION}", crate::i18n::tr("Atelier Lens couldn't find where to keep your library."), problem.error)
     } else {
-        format!("{} {}. {} {EXPLANATION}", crate::i18n::tr("LightCraft couldn't open the library at"), problem.path, problem.error)
+        format!("{} {}. {} {EXPLANATION}", crate::i18n::tr("Atelier Lens couldn't open the library at"), problem.path, problem.error)
     };
     let shown = egui::Window::new(crate::i18n::tr("Your library couldn't be opened"))
         .id(egui::Id::unique(ERROR_WINDOW_ID))

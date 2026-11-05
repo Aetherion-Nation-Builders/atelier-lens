@@ -109,7 +109,7 @@ fn the_list_checks_each_library_and_selects_the_last_one() {
     assert!(why[0].unwrap().contains("Not found"), "{why:?}");
     assert_eq!(why[1], None, "a lock is not probed: {why:?}");
     assert_eq!(why[2], None);
-    assert!(why[3].unwrap().contains("no LightCraft library"), "{why:?}");
+    assert!(why[3].unwrap().contains("no Atelier Lens library"), "{why:?}");
     assert!(why[4].unwrap().contains("not a library folder"), "{why:?}");
     assert_eq!(why[5], None);
     assert_eq!(c.selected, Some(5), "the last library opened");
@@ -1052,7 +1052,7 @@ fn try_again_on_a_missing_remembered_library_makes_nothing_in_an_empty_folder() 
     assert_eq!(std::fs::read_dir(&mount).unwrap().count(), 0, "nothing is written there");
     assert!(h.app.session.library.is_none());
     let p = h.app.library_problem.as_ref().expect("the window stays");
-    assert_eq!(p.error, "There is no LightCraft library in this folder any more.");
+    assert_eq!(p.error, "There is no Atelier Lens library in this folder any more.");
     assert!(has(&h, "button:libraryRetry"));
     // the share is connected again: Try Again opens the library in it
     make_library(&mount);
@@ -1080,7 +1080,7 @@ fn try_again_says_why_the_remembered_library_is_missing_in_the_interface_languag
     assert_eq!(h.request("ui.clickWidget", json!({"id": "button:libraryRetry"}), T)["ok"], true);
     settle(&mut h);
     let error = h.app.library_problem.as_ref().map(|p| p.error.clone()).unwrap_or_default();
-    assert_eq!(error, "In diesem Ordner ist keine LightCraft-Bibliothek mehr.");
+    assert_eq!(error, "In diesem Ordner ist keine Atelier Lens-Bibliothek mehr.");
     std::fs::remove_dir(&mount).unwrap();
     assert_eq!(h.request("ui.clickWidget", json!({"id": "button:libraryRetry"}), T)["ok"], true);
     settle(&mut h);

@@ -82,11 +82,11 @@ try {
   [IO.File]::WriteAllText($legacyExe, 'test placeholder; never executed')
   $programFiles = Join-Path ([Environment]::GetFolderPath('LocalApplicationData')) 'Programs\ArtCraft'
   $cases = @(
-    @{ Name = 'fresh'; Expected = (Join-Path $programFiles 'Atelier Lens') },
+    @{ Name = 'fresh'; Expected = (Join-Path $programFiles 'LightCraft') },
     @{ Name = 'legacy-app-paths'; Legacy = $legacyExe; Expected = $legacy },
     # A stale unquoted path with a space used to resolve to the parent of the text before the space.
-    @{ Name = 'legacy-folder-deleted'; Legacy = (Join-Path $root 'deleted app\lightcraft.exe'); Expected = (Join-Path $programFiles 'Atelier Lens') },
-    @{ Name = 'legacy-exe-deleted'; Legacy = (Join-Path $emptied 'lightcraft.exe'); Expected = (Join-Path $programFiles 'Atelier Lens') },
+    @{ Name = 'legacy-folder-deleted'; Legacy = (Join-Path $root 'deleted app\lightcraft.exe'); Expected = (Join-Path $programFiles 'LightCraft') },
+    @{ Name = 'legacy-exe-deleted'; Legacy = (Join-Path $emptied 'lightcraft.exe'); Expected = (Join-Path $programFiles 'LightCraft') },
     @{ Name = 'remembered-folder'; Modern = $true; Expected = $modern },
     @{ Name = 'remembered-beats-legacy'; Modern = $true; Legacy = $legacyExe; Expected = $modern },
     @{ Name = 'explicit-beats-legacy'; Legacy = $legacyExe; Explicit = $true; Expected = $explicit },

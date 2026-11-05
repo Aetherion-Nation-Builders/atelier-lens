@@ -279,13 +279,13 @@ fn page_title_names_the_active_photo_and_unsaved_changes() {
     let ids = app.session.visible_cloned();
     let name = |app: &LightcraftApp, id: lightcraft_catalog::PhotoId| app.session.catalog.photo(id).unwrap().file_name.clone();
     app.run("library.select", json!({"ids": [ids[0].0]})).unwrap();
-    assert_eq!(app.page_title(false), format!("{} — LightCraft", name(&app, ids[0])));
-    assert_eq!(app.page_title(true), format!("{} • — LightCraft", name(&app, ids[0])));
+    assert_eq!(app.page_title(false), format!("{} — Atelier Lens", name(&app, ids[0])));
+    assert_eq!(app.page_title(true), format!("{} • — Atelier Lens", name(&app, ids[0])));
     app.run("library.select", json!({"ids": [ids[1].0]})).unwrap();
-    assert_eq!(app.page_title(false), format!("{} — LightCraft", name(&app, ids[1])));
+    assert_eq!(app.page_title(false), format!("{} — Atelier Lens", name(&app, ids[1])));
     // no photo: the window title
     let empty = LightcraftApp::new(lightcraft_engine::Session::new(), Services::default());
     assert!(empty.session.active().is_none());
-    assert_eq!(empty.page_title(false), "LightCraft");
-    assert_eq!(empty.page_title(true), "LightCraft •");
+    assert_eq!(empty.page_title(false), "Atelier Lens");
+    assert_eq!(empty.page_title(true), "Atelier Lens •");
 }

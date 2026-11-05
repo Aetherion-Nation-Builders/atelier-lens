@@ -71,7 +71,7 @@ pub(crate) fn launch_imports_in(args: &[String], cwd: Option<&std::path::Path>, 
             Some(LaunchPath::Library(dir)) if library.is_none() => library = Some(std::path::PathBuf::from(dir)),
             Some(LaunchPath::Library(dir)) => {
                 log::warn!("one library at a time: not opening {dir} given at launch");
-                notices.push(format!("{dir} was not opened: LightCraft opens one library at a time. Open it with File ▸ Open Library…"));
+                notices.push(format!("{dir} was not opened: Atelier Lens opens one library at a time. Open it with File ▸ Open Library…"));
             }
             Some(LaunchPath::Import(p)) => files.push(p),
             Some(LaunchPath::Refused { path, why }) => {
@@ -126,7 +126,7 @@ pub(crate) fn stopped_text(error: &str, lost: Option<&str>) -> String {
 /// LightCraft stopped while its window was up: say so in the log and in a native message box
 /// naming the log file (as [`startup_failed`] does for a start that failed).
 pub(crate) fn stopped_while_running(text: &str, log_file: Option<&std::path::Path>) {
-    log::error!("LightCraft stopped: {text}");
+    log::error!("Atelier Lens stopped: {text}");
     if std::env::var_os("LIGHTCRAFT_NO_PREFS").is_some() {
         return; // tests and scripts: no dialog to click away
     }
@@ -143,7 +143,7 @@ pub(crate) fn stopped_while_running(text: &str, log_file: Option<&std::path::Pat
 /// message box naming the log file, instead of exiting without a trace — the release builds have
 /// no console on Windows, and an app started from Finder shows no standard error (issue #260).
 pub(crate) fn startup_failed(error: &str, log_file: Option<&std::path::Path>) {
-    log::error!("LightCraft could not open its window: {error}");
+    log::error!("Atelier Lens could not open its window: {error}");
     if std::env::var_os("LIGHTCRAFT_NO_PREFS").is_some() {
         return; // tests and scripts: no dialog to click away
     }
