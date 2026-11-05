@@ -62,8 +62,16 @@ pub fn strings(code: &str) -> Vec<(&'static str, &'static str)> {
 /// One language's upstream catalog as Atelier shows it: every key and translation rewritten to
 /// name this product, the retired rows dropped, and our own strings added.
 pub fn apply(code: &str, catalog: std::collections::BTreeMap<String, String>) -> std::collections::BTreeMap<String, String> {
-    let mut out: std::collections::BTreeMap<String, String> =
-        catalog.into_iter().filter(|(key, _)| !retired(key)).map(|(key, value)| (rewrite(&key), rewrite(&value))).collect();
+    let mut out = std::collections::BTreeMap::new();
+    for (key, value) in catalog.into_iter().filter(|(key, _)| !retired(key)) {
+        let value = rewrite(&value);
+        // Kept under upstream's key too: messages from below the UI crate (and strings upstream
+        // adds before a sync renames them) still name the upstream product.
+        if key.contains(UPSTREAM) {
+            out.insert(rewrite(&key), value.clone());
+        }
+        out.insert(key, value);
+    }
     for (key, value) in strings(code) {
         out.insert(key.to_string(), value.to_string());
     }
