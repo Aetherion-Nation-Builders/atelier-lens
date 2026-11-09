@@ -900,7 +900,8 @@ fn cull_body(app: &mut LightcraftApp, ui: &mut egui::Ui, t: &Tokens, dlg: &mut D
     );
 }
 
-/// The body of the WhatsNew dialog.
+/// The body of the WhatsNew dialog. Atelier: the notes are upstream's `docs/whats-new.md`, shown
+/// under our name (`identity::rewrite`), since the dialog now opens by itself after an update.
 fn whats_new_body(ui: &mut egui::Ui, t: &Tokens, dlg: &mut Dialog) {
     let Dialog::WhatsNew = dlg else { return };
     egui::ScrollArea::vertical().max_height(list_height(ui, 460.0)).auto_shrink([false, true]).show(ui, |ui| {
@@ -908,15 +909,15 @@ fn whats_new_body(ui: &mut egui::Ui, t: &Tokens, dlg: &mut Dialog) {
             let l = line.trim_end();
             if let Some(h) = l.strip_prefix("### ") {
                 ui.add_space(6.0);
-                ui.label(egui::RichText::new(crate::i18n::tr(h)).font(t.semibold(12.5)).color(t.text));
+                ui.label(egui::RichText::new(crate::identity::rewrite(crate::i18n::tr(h))).font(t.semibold(12.5)).color(t.text));
             } else if let Some(h) = l.strip_prefix("## ") {
                 ui.add_space(8.0);
-                ui.label(egui::RichText::new(crate::i18n::tr(h)).font(t.semibold(14.0)).color(t.text));
+                ui.label(egui::RichText::new(crate::identity::rewrite(crate::i18n::tr(h))).font(t.semibold(14.0)).color(t.text));
             } else if l.starts_with("# ") || l.is_empty() {
             } else if let Some(b) = l.strip_prefix("- ") {
-                ui.label(egui::RichText::new(format!("•  {}", crate::i18n::tr(b).replace('`', ""))).color(t.text_label));
+                ui.label(egui::RichText::new(format!("•  {}", crate::identity::rewrite(crate::i18n::tr(b)).replace('`', ""))).color(t.text_label));
             } else {
-                ui.label(egui::RichText::new(crate::i18n::tr(l.trim()).replace('`', "")).color(t.text_label));
+                ui.label(egui::RichText::new(crate::identity::rewrite(crate::i18n::tr(l.trim())).replace('`', "")).color(t.text_label));
             }
         }
     });
