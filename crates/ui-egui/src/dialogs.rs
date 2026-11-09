@@ -66,7 +66,7 @@ pub(crate) const WELCOME_START: &str = "Get Started";
 /// not bind.
 pub(crate) const WELCOME_PAGES: [(&str, &str, &str); 6] = [
     (
-        "Welcome to LightCraft",
+        "Welcome to Atelier Lens",
         "A fast, non-destructive photo library and raw developer: your originals stay untouched, and every edit can be revisited or reset.",
         "Bring photos in with File › Import Photos…",
     ),
@@ -92,7 +92,7 @@ pub(crate) const WELCOME_PAGES: [(&str, &str, &str); 6] = [
     ),
     (
         "Put agents to work",
-        "Everything in LightCraft is a command, so AI agents can drive the running app over MCP: culling, editing, exporting on your word.",
+        "Everything in Atelier Lens is a command, so AI agents can drive the running app over MCP: culling, editing, exporting on your word.",
         "Start the app with --control 7980 (or LIGHTCRAFT_CONTROL_PORT), then lightcraft-cli mcp --connect attaches one to it.",
     ),
 ];

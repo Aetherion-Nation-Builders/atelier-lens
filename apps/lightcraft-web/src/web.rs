@@ -994,7 +994,7 @@ pub fn start(chinese_font: Vec<u8>) {
                  Switch to that tab, or close it and reload this page. (Two tabs would overwrite each other's changes.)",
             );
             if let Some(b) = &bridge {
-                b.post(&Outgoing::Failed("LightCraft is already open in another tab or window of this browser".into()));
+                b.post(&Outgoing::Failed("Atelier Lens is already open in another tab or window of this browser".into()));
             }
             return;
         }
