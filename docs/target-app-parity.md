@@ -1,6 +1,6 @@
 # Target-app parity: LightCraft vs Adobe Lightroom
 
-> **Last reviewed:** 2026-10-10 · **Target:** Adobe Lightroom Classic 15.5 (August 2026) and Lightroom 9.6 (desktop) · **Changes:** [revision history](#revision-history)
+> **Last reviewed:** 2026-11-15 · **Target:** Adobe Lightroom Classic 15.5 (August 2026) and Lightroom 9.6 (desktop) · **Changes:** [revision history](#revision-history)
 
 The authoritative assessment of how close LightCraft is to Lightroom. The row-by-row checklist is
 [parity-checklist.md](parity-checklist.md); the ranked work list is [gaps.md](gaps.md); deep areas
@@ -95,7 +95,7 @@ search embeddings; generative remove runs in Adobe's cloud.
 | Subject / Sky / Background masks | classical heuristics; the file's own DNG semantic mattes | 🟡 |
 | People (faces, body, hair, skin…) and Landscape masks | — | ⬜ |
 | Object / Describe masks | SAM 3 in pure Rust (Metal / CPU); opt-in 3.4 GB download, no mirror configured | 🟡 |
-| Depth range mask, Lens Blur | — | ⬜ |
+| Depth range mask, Lens Blur | Lens Blur keeps the subject (or any mask, e.g. an Object mask) sharp and blurs the rest with disc bokeh and Boost; no depth map yet, so no focal range or depth range mask | 🟡 |
 | AI Denoise | Bayer only, built-in classical denoiser out of the box, optional user-installed weights, pure-Rust CPU / GPU | 🟡 |
 | Raw Details, Super Resolution | — | ⬜ |
 | Generative remove, distractions, reflections | — (generative is out of scope: cloud) | ⬜ |
@@ -299,7 +299,9 @@ P2 items 12–25 h; look tuning, performance, packaging, hardening 25–45 h.
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-11-15 | minor | Lens Blur renders with AI subject focus and per-mask bokeh (the AI table's 🟡 and the missing depth map are unchanged); survey layout, opened-library folder safety, direct Lightroom backup-zip import, legacy shutter repair and the Highlights/Shadows block fix landed; craft-libs cutover (TIFF/JPEG/JXL/GIF/PSD/HEIF/raw, metadata, gain maps); v0.21.0 and v0.21.1 released. Headline numbers, coverage and estimates were not re-measured. |
 | 2026-11-07 | correction | Compressed ORF sensor support withdrawn pending provenance review; embedded preview fallback remains. Coverage regenerated without the removed decoder: 557 verified, 665 unverified, 187 preview-only, 37 unsupported; 94% use-weighted coverage. |
+| 2026-11-05 | minor | AI table: Lens Blur ⬜ → 🟡 (subject- or mask-focused disc blur, no depth map); headline numbers unchanged |
 | 2026-11-04 | minor | Compressed ORF support was introduced in #3775; subsequently withdrawn pending provenance review. Earlier clean-room and verification claims are withdrawn; compressed files use embedded previews when available. See [ORF status](orf-compression.md). |
 | 2026-10-24 | patch | Stability, the stability discount, the Beta-needs list and the estimate history: tests run in CI on Linux x64 since #2667 (FreeBSD nightly), not on macOS or Windows (gap 9); percentages and hours unchanged |
 | 2026-10-23 | minor | AI Denoise runs without a model (built-in denoiser); percentages unchanged, since it is a classical filter and Bayer-only |
